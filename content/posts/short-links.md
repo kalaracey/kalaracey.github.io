@@ -72,4 +72,4 @@ Install the PAC file on macOS by opening System Preferences, go to Network > Adv
 
 Now, you should be able to type in `g/foo bar` into your browser, hit enter, and it should direct you to Google's search results for "foo bar". At least in Chrome, when you type it in, there may be two results in the drop-down suggestion list - you need to make sure to select the blue one (you should only need to do this once).
 
-[^file-scheme]: file:///path/to/proxyconfig.pac does not seem to work (https://superuser.com/a/565071).
+[^file-scheme]: `file:///path/to/proxyconfig.pac` does not seem to work (https://superuser.com/a/565071).
