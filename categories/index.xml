@@ -1,1 +1,51 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on Kyle Laracey</title><link>https://kalaracey.github.io/categories/</link><description>Recent content in Categories on Kyle Laracey</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://kalaracey.github.io/categories/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on Kyle Laracey</title><link>https://kalaracey.github.io/categories/</link><description>Recent content in Categories on Kyle Laracey</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://kalaracey.github.io/categories/index.xml" rel="self" type="application/rss+xml"/><item><title>How Short Links Work</title><link>https://kalaracey.github.io/how-short-links-work/</link><pubDate>Mon, 18 Apr 2022 19:14:58 -0400</pubDate><guid>https://kalaracey.github.io/how-short-links-work/</guid><description>&lt;p>In some organizations, you may have seen &amp;ldquo;short links&amp;rdquo; like&lt;/p>
+&lt;p>&lt;code>http://go/foo-bar&lt;/code>&lt;/p>
+&lt;p>or&lt;/p>
+&lt;p>&lt;code>http://x/12345&lt;/code>.&lt;/p>
+&lt;p>These are short for (and resolve to) something else, like &lt;code>https://example.com/go/foo-bar&lt;/code> or &lt;code>https://example.com/x/reports/12345&lt;/code>.&lt;/p>
+&lt;p>One way to set this up is to use a proxy and something called &lt;a href="https://en.wikipedia.org/wiki/Proxy_auto-config">Proxy Auto Configuration (PAC)&lt;/a>. A PAC file is a small snippet of Javascript that directs browsers to use a proxy for certain hostnames. For more details, see &lt;a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file">MDN&lt;/a>.&lt;/p>
+&lt;p>Here&amp;rsquo;s a simple setup for macOS using the &lt;a href="https://caddyserver.com/">Caddy&lt;/a> proxy that will let you type &lt;code>http://g/foo bar&lt;/code> and it will take you to &lt;code>http://google.com/search?q=foo+bar&lt;/code>. (This example is a bit of a contrived, since all browsers today support querying a search engine in the URL bar, but it gets the idea across).&lt;/p>
+&lt;p>Install Caddy:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ brew install caddy
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>In a new file &lt;code>proxyconfig.pac&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-javascript" data-lang="javascript">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">function&lt;/span> &lt;span style="color:#a6e22e">FindProxyForURL&lt;/span>(&lt;span style="color:#a6e22e">url&lt;/span>, &lt;span style="color:#a6e22e">host&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span> (&lt;span style="color:#a6e22e">host&lt;/span> &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#e6db74">&amp;#34;g&amp;#34;&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;PROXY localhost:9999&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> } &lt;span style="color:#66d9ef">else&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#e6db74">&amp;#34;DIRECT&amp;#34;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Next, we&amp;rsquo;ll configure Caddy to (a) serve a static PAC file, and (b) proxy &lt;code>http://g&lt;/code> requests to Google. In a new file &lt;code>caddyfile&lt;/code> in the same directory:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-plain" data-lang="plain">&lt;span style="display:flex;">&lt;span># Serve up the PAC file.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://localhost:9999 {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> log
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> handle /proxyconfig.pac {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> file_server {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span># Rewrite http://g requests.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://g:9999 {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> log
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> @mymatcher {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> path_regexp /(.*)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> redir @mymatcher http://www.google.com/search?q={http.regexp.1}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span># Redirect requests for Google.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>http://, https:// {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> redir {scheme}{hostport}{uri}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>(I&amp;rsquo;m new to Caddy so the above may not be good form, secure, etc. You&amp;rsquo;ve been warned.)&lt;/p>
+&lt;p>Start Caddy:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>$ caddy run
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Install the PAC file on macOS by opening System Preferences, go to Network &amp;gt; Advanced &amp;gt; Proxies &amp;gt; Automatic Proxy Configuration. Set the Proxy Configuration File URL to http://localhost:9999/proxyconfig.pac.&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>.&lt;/p>
+&lt;p>Now, you should be able to type in &lt;code>g/foo bar&lt;/code> into your browser, hit enter, and it should direct you to Google&amp;rsquo;s search results for &amp;ldquo;foo bar&amp;rdquo;. At least in Chrome, when you type it in, there may be two results in the drop-down suggestion list - you need to make sure to select the blue one (you should only need to do this once).&lt;/p>
+&lt;section class="footnotes" role="doc-endnotes">
+&lt;hr>
+&lt;ol>
+&lt;li id="fn:1" role="doc-endnote">
+&lt;p>file:///path/to/proxyconfig.pac does not seem to work (&lt;a href="https://superuser.com/a/565071)">https://superuser.com/a/565071)&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;/section></description></item></channel></rss>
