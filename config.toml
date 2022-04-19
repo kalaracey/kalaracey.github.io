@@ -1,0 +1,16 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'Kyle Laracey'
+theme = "etch"
+
+[menu]
+  [[menu.main]]
+    name = "posts"
+    url = "/"
+
+  [[menu.main]]
+    name = "about"
+    url = "/about/"
+
+[permalinks]
+  posts = "/:title/"
