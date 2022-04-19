@@ -1,7 +1,6 @@
 ---
 title: "How Short Links Work"
 date: 2022-04-18T19:14:58-04:00
-draft: true
 ---
 
 In some organizations, you may have seen "short links" like
