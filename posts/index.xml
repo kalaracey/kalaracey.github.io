@@ -45,7 +45,7 @@
 &lt;hr>
 &lt;ol>
 &lt;li id="fn:1" role="doc-endnote">
-&lt;p>file:///path/to/proxyconfig.pac does not seem to work (&lt;a href="https://superuser.com/a/565071)">https://superuser.com/a/565071)&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
+&lt;p>&lt;code>file:///path/to/proxyconfig.pac&lt;/code> does not seem to work (&lt;a href="https://superuser.com/a/565071)">https://superuser.com/a/565071)&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
 &lt;/section></description></item></channel></rss>
