@@ -35,6 +35,8 @@ function FindProxyForURL(url, host) {
 }
 ```
 
+For details on how the PAC file works, see the aforementioned MDN page.
+
 Next, we'll configure Caddy to (a) serve a static PAC file, and (b) proxy `http://g` requests to Google. In a new file `caddyfile` in the same directory:
 
 ```plain
@@ -68,8 +70,10 @@ Start Caddy:
 $ caddy run
 ```
 
-Install the PAC file on macOS by opening System Preferences, go to Network > Advanced > Proxies > Automatic Proxy Configuration. Set the Proxy Configuration File URL to http://localhost:9999/proxyconfig.pac.[^file-scheme].
+Install the PAC file on macOS by opening System Preferences, go to Network > Advanced > Proxies > Automatic Proxy Configuration. Set the Proxy Configuration File URL to `http://localhost:9999/proxyconfig.pac`.[^file-scheme]
 
 Now, you should be able to type in `g/foo bar` into your browser, hit enter, and it should direct you to Google's search results for "foo bar". At least in Chrome, when you type it in, there may be two results in the drop-down suggestion list - you need to make sure to select the blue one (you should only need to do this once).
+
+If you modify the PAC file, your browser may not immediately pick the change up. To force Chrome to do so, go to [chrome://net-internals#proxy](chrome://net-internals#proxy) and click 'Re-apply settings'.
 
 [^file-scheme]: `file:///path/to/proxyconfig.pac` does not seem to work (https://superuser.com/a/565071).
