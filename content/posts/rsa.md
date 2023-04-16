@@ -49,7 +49,7 @@ Since $p-1$ divides $\phi(n)$, we have
 
 $$M^{k\phi(n)+1} \equiv M^{l(p-1)}M \equiv 1 M \equiv M \pmod p$$
 
-for some $l \in \mathbb Z$. But note that when $M$ divides $p$, $M \equiv 0 \pmod p$, and so
+for some $l \in \mathbb Z$. But note that when $p$ divides $M$, $M \equiv 0 \pmod p$, and so
 
 $$M^{k\phi(n)+1} \equiv M \pmod p$$
 
