@@ -30,7 +30,7 @@ $$&lt;/p>
 &lt;p>$$M^{p-1} \equiv 1 \pmod p$$&lt;/p>
 &lt;p>Since $p-1$ divides $\phi(n)$, we have&lt;/p>
 &lt;p>$$M^{k\phi(n)+1} \equiv M^{l(p-1)}M \equiv 1 M \equiv M \pmod p$$&lt;/p>
-&lt;p>for some $l \in \mathbb Z$. But note that when $M$ divides $p$, $M \equiv 0 \pmod p$, and so&lt;/p>
+&lt;p>for some $l \in \mathbb Z$. But note that when $p$ divides $M$, $M \equiv 0 \pmod p$, and so&lt;/p>
 &lt;p>$$M^{k\phi(n)+1} \equiv M \pmod p$$&lt;/p>
 &lt;p>always holds, regardless of whether $p$ divides $M$ or not. Arguing likewise for $q$, we get&lt;/p>
 &lt;p>$$M^{k\phi(n)+1} \equiv M \pmod q$$&lt;/p>
