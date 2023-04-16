@@ -4,7 +4,7 @@ date: 2023-04-16T11:41:08-04:00
 draft: false
 ---
 
-Here are some notes on how RSA works. I mainly wrote them up as a review for myself. They are mostly from the RSA paper (which you should probably go read instead).
+Here are some notes on how RSA works. I mainly wrote them up as a review for myself. They are mostly from the RSA paper (see References) which you should probably go read instead.
 
 Let
 
