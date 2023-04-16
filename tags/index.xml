@@ -1,4 +1,59 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tags on Kyle Laracey</title><link>https://kalaracey.github.io/tags/</link><description>Recent content in Tags on Kyle Laracey</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://kalaracey.github.io/tags/index.xml" rel="self" type="application/rss+xml"/><item><title>How Short Links Work</title><link>https://kalaracey.github.io/how-short-links-work/</link><pubDate>Mon, 18 Apr 2022 19:14:58 -0400</pubDate><guid>https://kalaracey.github.io/how-short-links-work/</guid><description>&lt;p>In some organizations, you may have seen &amp;ldquo;short links&amp;rdquo; like&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tags on Kyle Laracey</title><link>https://kalaracey.github.io/tags/</link><description>Recent content in Tags on Kyle Laracey</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://kalaracey.github.io/tags/index.xml" rel="self" type="application/rss+xml"/><item><title>RSA Review</title><link>https://kalaracey.github.io/rsa-review/</link><pubDate>Sun, 16 Apr 2023 11:41:08 -0400</pubDate><guid>https://kalaracey.github.io/rsa-review/</guid><description>&lt;p>Here are some notes on how RSA works. I mainly wrote them up as a review for myself. They are mostly from the RSA paper (which you should probably go read instead).&lt;/p>
+&lt;p>Let&lt;/p>
+&lt;ul>
+&lt;li>$p$, $q$ be two primes&lt;/li>
+&lt;li>$n = pq$&lt;/li>
+&lt;li>$M$: an integer, the message, where $0 \leq M &amp;lt; n$&lt;/li>
+&lt;li>$E$ and $D$: the encryption and decryption algorithms&lt;/li>
+&lt;li>$C$: cyphertext.&lt;/li>
+&lt;/ul>
+&lt;p>Pick a large, random integer $d$ relatively prime to $\phi(n)$, where $\phi$ is the Euler totient function.
+$\phi$ is a multiplicative function, so $\phi(xy)=\phi(x)\phi(y)$. Also, if $x$ is prime, $\phi(x) = x-1$.&lt;/p>
+&lt;p>In modular arithmetic, if $a$ and $m$ are relatively prime, $a \pmod m$ has a modular inverse, i.e. there exists an $x$ such that $ax \equiv 1 \pmod m$. Thus $d$ has a modular inverse $e$ such that $ed \equiv 1 \pmod {\phi(n)}$.&lt;/p>
+&lt;p>$C$, $E$, and $D$ are defined as follows:&lt;/p>
+&lt;p>$$
+\begin{aligned}
+C \equiv &amp;amp; E(M) \equiv M^e \pmod n \\
+&amp;amp; D(C) \equiv C^d \pmod n
+\end{aligned}
+$$&lt;/p>
+&lt;p>Now we show that $D(E(M))$ yields $M$.&lt;/p>
+&lt;p>$$
+\begin{aligned}
+D(C) \equiv D(M^e) \equiv (M^e)^d \equiv M^{ed} &amp;amp;\equiv M^{1 \pmod {\phi(n)}} \pmod n \\
+&amp;amp;\equiv M^{k\phi(n)+1} \pmod n
+\end{aligned}
+$$&lt;/p>
+&lt;p>since $1 \pmod {\phi(n)}$ is $k\phi(n) + 1$ in $\mathbb Z$ for some integer $k$ by definition.&lt;/p>
+&lt;p>Euler&amp;rsquo;s theorem states that if $a$ and $n$ are relatively prime, $a^{\phi(n)} \equiv 1 \pmod n$.&lt;/p>
+&lt;p>When $p$ does not divide $M$, since $p$ is prime, $p$ and $M$ are relatively prime. Thus, by Euler&amp;rsquo;s theorem, we have&lt;/p>
+&lt;p>$$M^{p-1} \equiv 1 \pmod p$$&lt;/p>
+&lt;p>Since $p-1$ divides $\phi(n)$, we have&lt;/p>
+&lt;p>$$M^{k\phi(n)+1} \equiv M^{l(p-1)}M \equiv 1 M \equiv M \pmod p$$&lt;/p>
+&lt;p>for some $l \in \mathbb Z$. But note that when $M$ divides $p$, $M \equiv 0 \pmod p$, and so&lt;/p>
+&lt;p>$$M^{k\phi(n)+1} \equiv M \pmod p$$&lt;/p>
+&lt;p>always holds, regardless of whether $p$ divides $M$ or not. Arguing likewise for $q$, we get&lt;/p>
+&lt;p>$$M^{k\phi(n)+1} \equiv M \pmod q$$&lt;/p>
+&lt;p>By the Chinese remainder theorem, if there is a solution to&lt;/p>
+&lt;p>$$
+\begin{align}
+x \equiv a \mod p \\
+x \equiv b \mod q
+\end{align}
+$$&lt;/p>
+&lt;p>then the solution is unique modulo $pq$. That is, there is only one solution $x$, and it is an integer such that $1 \leq x &amp;lt; pq$.&lt;/p>
+&lt;p>Thus, we have&lt;/p>
+&lt;p>$$M^{k\phi(n)+1} \equiv M \pmod {pq}$$&lt;/p>
+&lt;p>and so&lt;/p>
+&lt;p>$$D(C) \equiv M \pmod n$$&lt;/p>
+&lt;h1 id="references">References&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="https://people.csail.mit.edu/rivest/Rsapaper.pdf">A Method for Obtaining Digital Signatures and Public-Key Cryptosystems (Rivest, Shamir, &amp;amp; Adleman)&lt;/a> (the RSA paper)&lt;/li>
+&lt;li>&lt;a href="https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell">zkSNARKs in a nutshell - Ethereum Foundation Blog&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://en.wikipedia.org/wiki/Euler%27s_theorem">Euler&amp;rsquo;s theorem - Wikipedia&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://en.wikipedia.org/wiki/Modular_multiplicative_inverse">Modular multiplicative inverse - Wikipedia&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://kconrad.math.uconn.edu/blurbs/ugradnumthy/crt.pdf">The Chinese Remainder Theorem (Keith Conrad)&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>How Short Links Work</title><link>https://kalaracey.github.io/how-short-links-work/</link><pubDate>Mon, 18 Apr 2022 19:14:58 -0400</pubDate><guid>https://kalaracey.github.io/how-short-links-work/</guid><description>&lt;p>In some organizations, you may have seen &amp;ldquo;short links&amp;rdquo; like&lt;/p>
 &lt;p>&lt;code>http://go/foo-bar&lt;/code>&lt;/p>
 &lt;p>or&lt;/p>
 &lt;p>&lt;code>http://x/12345&lt;/code>.&lt;/p>
@@ -43,11 +98,11 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Install the PAC file on macOS by opening System Preferences, go to Network &amp;gt; Advanced &amp;gt; Proxies &amp;gt; Automatic Proxy Configuration. Set the Proxy Configuration File URL to &lt;code>http://localhost:9999/proxyconfig.pac&lt;/code>.&lt;sup id="fnref:1">&lt;a href="#fn:1" class="footnote-ref" role="doc-noteref">1&lt;/a>&lt;/sup>&lt;/p>
 &lt;p>Now, you should be able to type in &lt;code>g/foo bar&lt;/code> into your browser, hit enter, and it should direct you to Google&amp;rsquo;s search results for &amp;ldquo;foo bar&amp;rdquo;. At least in Chrome, when you type it in, there may be two results in the drop-down suggestion list - you need to make sure to select the blue one (you should only need to do this once).&lt;/p>
 &lt;p>If you modify the PAC file, your browser may not immediately pick the change up. To force Chrome to do so, go to &lt;a href="chrome://net-internals#proxy">chrome://net-internals#proxy&lt;/a> and click &amp;lsquo;Re-apply settings&amp;rsquo;.&lt;/p>
-&lt;section class="footnotes" role="doc-endnotes">
+&lt;div class="footnotes" role="doc-endnotes">
 &lt;hr>
 &lt;ol>
-&lt;li id="fn:1" role="doc-endnote">
+&lt;li id="fn:1">
 &lt;p>&lt;code>file:///path/to/proxyconfig.pac&lt;/code> does not seem to work (&lt;a href="https://superuser.com/a/565071)">https://superuser.com/a/565071)&lt;/a>.&amp;#160;&lt;a href="#fnref:1" class="footnote-backref" role="doc-backlink">&amp;#x21a9;&amp;#xfe0e;&lt;/a>&lt;/p>
 &lt;/li>
 &lt;/ol>
-&lt;/section></description></item></channel></rss>
+&lt;/div></description></item></channel></rss>

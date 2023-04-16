@@ -1,0 +1,19 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link rel="shortcut icon" href=https://kalaracey.github.io/favicon.ico><link rel=stylesheet href=/css/style.min.css><title>RSA Review</title></head><body><header id=banner><h2><a href=https://kalaracey.github.io>Kyle Laracey</a></h2><nav><ul><li><a href=/about/ title>about</a></li><li><a href=/ title>posts</a></li></ul></nav></header><main id=content><article><header id=post-header><h1>RSA Review</h1><div><time>April 16, 2023</time></div></header><p>Here are some notes on how RSA works. I mainly wrote them up as a review for myself. They are mostly from the RSA paper (which you should probably go read instead).</p><p>Let</p><ul><li>$p$, $q$ be two primes</li><li>$n = pq$</li><li>$M$: an integer, the message, where $0 \leq M &lt; n$</li><li>$E$ and $D$: the encryption and decryption algorithms</li><li>$C$: cyphertext.</li></ul><p>Pick a large, random integer $d$ relatively prime to $\phi(n)$, where $\phi$ is the Euler totient function.
+$\phi$ is a multiplicative function, so $\phi(xy)=\phi(x)\phi(y)$. Also, if $x$ is prime, $\phi(x) = x-1$.</p><p>In modular arithmetic, if $a$ and $m$ are relatively prime, $a \pmod m$ has a modular inverse, i.e. there exists an $x$ such that $ax \equiv 1 \pmod m$. Thus $d$ has a modular inverse $e$ such that $ed \equiv 1 \pmod {\phi(n)}$.</p><p>$C$, $E$, and $D$ are defined as follows:</p><p>$$
+\begin{aligned}
+C \equiv & E(M) \equiv M^e \pmod n \\
+& D(C) \equiv C^d \pmod n
+\end{aligned}
+$$</p><p>Now we show that $D(E(M))$ yields $M$.</p><p>$$
+\begin{aligned}
+D(C) \equiv D(M^e) \equiv (M^e)^d \equiv M^{ed} &\equiv M^{1 \pmod {\phi(n)}} \pmod n \\
+&\equiv M^{k\phi(n)+1} \pmod n
+\end{aligned}
+$$</p><p>since $1 \pmod {\phi(n)}$ is $k\phi(n) + 1$ in $\mathbb Z$ for some integer $k$ by definition.</p><p>Euler&rsquo;s theorem states that if $a$ and $n$ are relatively prime, $a^{\phi(n)} \equiv 1 \pmod n$.</p><p>When $p$ does not divide $M$, since $p$ is prime, $p$ and $M$ are relatively prime. Thus, by Euler&rsquo;s theorem, we have</p><p>$$M^{p-1} \equiv 1 \pmod p$$</p><p>Since $p-1$ divides $\phi(n)$, we have</p><p>$$M^{k\phi(n)+1} \equiv M^{l(p-1)}M \equiv 1 M \equiv M \pmod p$$</p><p>for some $l \in \mathbb Z$. But note that when $M$ divides $p$, $M \equiv 0 \pmod p$, and so</p><p>$$M^{k\phi(n)+1} \equiv M \pmod p$$</p><p>always holds, regardless of whether $p$ divides $M$ or not. Arguing likewise for $q$, we get</p><p>$$M^{k\phi(n)+1} \equiv M \pmod q$$</p><p>By the Chinese remainder theorem, if there is a solution to</p><p>$$
+\begin{align}
+x \equiv a \mod p \\
+x \equiv b \mod q
+\end{align}
+$$</p><p>then the solution is unique modulo $pq$. That is, there is only one solution $x$, and it is an integer such that $1 \leq x &lt; pq$.</p><p>Thus, we have</p><p>$$M^{k\phi(n)+1} \equiv M \pmod {pq}$$</p><p>and so</p><p>$$D(C) \equiv M \pmod n$$</p><h1 id=references>References</h1><ul><li><a href=https://people.csail.mit.edu/rivest/Rsapaper.pdf>A Method for Obtaining Digital Signatures and Public-Key Cryptosystems (Rivest, Shamir, & Adleman)</a> (the RSA paper)</li><li><a href=https://blog.ethereum.org/2016/12/05/zksnarks-in-a-nutshell>zkSNARKs in a nutshell - Ethereum Foundation Blog</a></li><li><a href=https://en.wikipedia.org/wiki/Euler%27s_theorem>Euler&rsquo;s theorem - Wikipedia</a></li><li><a href=https://en.wikipedia.org/wiki/Modular_multiplicative_inverse>Modular multiplicative inverse - Wikipedia</a></li><li><a href=https://kconrad.math.uconn.edu/blurbs/ugradnumthy/crt.pdf>The Chinese Remainder Theorem (Keith Conrad)</a></li></ul></article></main><footer id=footer></footer><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id=MathJax-script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script>
+<script>window.MathJax={tex:{inlineMath:[["$","$"],["\\(","\\)"]]}}</script></body></html>
